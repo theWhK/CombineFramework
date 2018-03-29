@@ -1,0 +1,18 @@
+{
+  "name": "combineframework",
+  "version": "1.0.1",
+  "description": "Framework flexível, com arquitetura linear DRACM, para projetos e aplicações web em PHP.",
+  "repository": {
+    "type": "git",
+    "url": "http://165.227.177.150:3000/theWhK/CombineFramework.git"
+  },
+  "author": "Willian Hideki",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^4.18.1"
+  },
+  "dependencies": {
+    "inputmask": "^3.3.11",
+    "sweetalert": "^2.1.0"
+  }
+}

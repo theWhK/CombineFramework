@@ -1,0 +1,22 @@
+{
+    "name": "Combine Framework",
+    "description": "Framework flexível, com arquitetura linear DRACM, para projetos e aplicações web em PHP.",
+    "authors": [
+        {
+            "name": "Willian Hideki Kawabata",
+            "email": "willhkblz@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.2.0",
+        "phpmailer/phpmailer": "^6.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Combine\\Main\\": "./",
+            "Combine\\Action\\": "Actions/",
+            "Combine\\Modules\\": "Modules/",
+            "Combine\\Classes\\": "Classes/"
+        }
+    }
+}

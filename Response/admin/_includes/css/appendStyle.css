@@ -1,0 +1,11 @@
+.table .acoes-coluna .acao {
+    padding: 5px;
+}
+
+.table .acoes-coluna .acao-editar {
+    color: #10c469;
+}
+
+.table .acoes-coluna .acao-apagar {
+    color: #ff5b5b;
+}
