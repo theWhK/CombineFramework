@@ -1,3 +1,3 @@
-# BlacksuitCommerce
+# Combine Framework
 
-Núcleo operacional da plataforma de e-commerce/ERP.
+Framework flexível, com arquitetura excluisva DRACM, para aplicações variadas em web usando PHP.
