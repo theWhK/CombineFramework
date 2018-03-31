@@ -159,8 +159,6 @@ class FirstMoldHierarchyModule
             // Armazena o resultado
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            var_dump_pre($result['id'] == $this->bufferData['id']);
-
             if ($result) {
                 if ($editMode) {
                     if ($result['id'] != $this->bufferData['id']) {
@@ -471,8 +469,12 @@ class FirstMoldHierarchyModule
         if (@!in_array('empty', $this->bufferData['flag']['urlAmigavel'])) {
             // Busca por registros iguais
             $stmt = $this->conn->PDO->prepare(
-                "SELECT id FROM `{$this->prefix}_methods` WHERE `urlAmigavel` = ?");
-            $stmt->execute([$this->bufferData['urlAmigavel']]);
+                "SELECT id FROM `{$this->prefix}_methods` 
+                 WHERE `urlAmigavel` = ? AND id_comando_pai = ?");
+            $stmt->execute([
+                $this->bufferData['urlAmigavel'],
+                $this->bufferData['id_comando_pai']
+            ]);
             
             // Armazena o resultado
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -493,8 +495,12 @@ class FirstMoldHierarchyModule
         if (@!in_array('empty', $this->bufferData['flag']['nomeArquivo'])) {
             // Busca por registros iguais
             $stmt = $this->conn->PDO->prepare(
-                "SELECT id FROM `{$this->prefix}_methods` WHERE `nomeArquivo` = ?");
-            $stmt->execute([$this->bufferData['nomeArquivo']]);
+                "SELECT id FROM `{$this->prefix}_methods` 
+                 WHERE `nomeArquivo` = ? AND id_comando_pai = ?");
+            $stmt->execute([
+                $this->bufferData['nomeArquivo'],
+                $this->bufferData['id_comando_pai']
+            ]);
             
             // Armazena o resultado
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
