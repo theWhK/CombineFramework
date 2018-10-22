@@ -57,8 +57,8 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Rótulo</th>
                                         <th>Ícone</th>
+                                        <th>Rótulo</th>
                                         <th>Opções</th>
                                     </tr>
                                 </thead>
@@ -126,8 +126,8 @@
                                         <thead>
                                             <tr>
                                                 <th>#</th>
-                                                <th>Rótulo</th>
                                                 <th>Ícone</th>
+                                                <th>Rótulo</th>
                                                 <th>Opções</th>
                                             </tr>
                                         </thead>

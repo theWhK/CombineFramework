@@ -474,7 +474,7 @@ class FirstMoldPermissionsModule
      * 
      * @return array
      */
-    public function list($idUsuario)
+    public function lista($idUsuario)
     {
         // Prepara a query
         $stmt = $this->conn->PDO->prepare(

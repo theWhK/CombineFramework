@@ -33,7 +33,7 @@ class SessaoModule
     /**
      * Empurra um novo conjunto de dados para a sessão alocada.
      * 
-     * @param any $data dados a serem enviados.
+     * @param array $data dados a serem enviados.
      * @param bool $update os dados novos serão atualizações 
      * dos antigos (true) ou substituirão completamente (false)? Falso por padrão.
      * 
@@ -44,10 +44,13 @@ class SessaoModule
         // Caso os dados existam, continua o processo
         // Caso não, trata de forma nula
         if (isset($data)) {
+            // Força array
+            if (!is_array($data)) $data = [$data];
+            
             // Caso o update seja verdadeiro, atualiza os campos
             // Caso seja falso, destrói os valores antigos e escreve os novos
             if ($update == true) {
-                $_SESSION[$this->_prefix] = array_merge($_SESSION[$this->_prefix], $data);
+                $_SESSION[$this->_prefix] = @array_merge($_SESSION[$this->_prefix], $data);
             } else {
                 $_SESSION[$this->_prefix] = $data;
             }

@@ -16,8 +16,6 @@ use Combine\Modules\Sessao\SessaoModule;
 use Combine\Modules\Usuarios\UsuariosModule;
 use Combine\Modules\NivelPoder\NivelPoderModule;
 
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
 
 // Proíbe o acesso externo
 if (!defined('PATH_ABS')) {
@@ -42,9 +40,7 @@ class AdminAction extends AbstractFirstMoldAction
      * Comando inicial.
      */
     public function index() 
-    {
-        //var_dump_pre($_COOKIE, true);
-        
+    {        
         // Módulos iniciais
         $LoginModule = new LoginModule(
             $this->conn, 
@@ -58,7 +54,7 @@ class AdminAction extends AbstractFirstMoldAction
         $FirstMoldMenuModule = new FirstMoldMenuModule(
             $this->conn, 
             $this->dbPrefix, 
-            $FirstMoldPermissionsModule->list($LoginModule->userId()),
+            $FirstMoldPermissionsModule->lista($LoginModule->userId()),
             $NivelPoderModule->isSuperUser($LoginModule->userId()));
         $NotificacoesModule = new NotificacoesModule();
         $UsuariosModule = new UsuariosModule($this->conn);
@@ -96,10 +92,16 @@ class AdminAction extends AbstractFirstMoldAction
         $FirstMoldMenuModule = new FirstMoldMenuModule(
             $this->conn, 
             $this->dbPrefix, 
-            $FirstMoldPermissionsModule->list($LoginModule->userId()),
+            $FirstMoldPermissionsModule->lista($LoginModule->userId()),
             $NivelPoderModule->isSuperUser($LoginModule->userId()));
         $NotificacoesModule = new NotificacoesModule();
         $UsuariosModule = new UsuariosModule($this->conn);
+
+        // Define o Método padrão
+        if (empty($this->method)) {
+            $this->method = "listar";
+            $this->prepareMethod();
+        };
 
         // Bloco padrão para verificar acesso
         require PATH_ABS.'/Actions/'.$this->className.'/_common/verificarLogin.php';
@@ -116,11 +118,6 @@ class AdminAction extends AbstractFirstMoldAction
 
         // Bloco padrão para dados do usuário logado
         require PATH_ABS.'/Actions/'.$this->className.'/_common/usuarioLogado.php';
-
-        // Define o Método padrão
-        if (empty($this->method)) {
-            $this->methodArchive = "listar";
-        };
 
         switch ($this->methodArchive) {
             case "criar":              
@@ -153,10 +150,16 @@ class AdminAction extends AbstractFirstMoldAction
         $FirstMoldMenuModule = new FirstMoldMenuModule(
             $this->conn, 
             $this->dbPrefix, 
-            $FirstMoldPermissionsModule->list($LoginModule->userId()),
+            $FirstMoldPermissionsModule->lista($LoginModule->userId()),
             $NivelPoderModule->isSuperUser($LoginModule->userId()));
         $NotificacoesModule = new NotificacoesModule();
         $UsuariosModule = new UsuariosModule($this->conn);
+
+        // Define o Método padrão
+        if (empty($this->method)) {
+            $this->method = "listar";
+            $this->prepareMethod();
+        };
 
         // Bloco padrão para verificar acesso
         require PATH_ABS.'/Actions/'.$this->className.'/_common/verificarLogin.php';
@@ -172,11 +175,6 @@ class AdminAction extends AbstractFirstMoldAction
 
         // Bloco padrão para dados do usuário logado
         require PATH_ABS.'/Actions/'.$this->className.'/_common/usuarioLogado.php';
-
-        // Define o Método padrão
-        if (empty($this->method)) {
-            $this->methodArchive = "listar";
-        };
 
         switch ($this->methodArchive) {
             case "criar":              
@@ -210,10 +208,16 @@ class AdminAction extends AbstractFirstMoldAction
         $FirstMoldMenuModule = new FirstMoldMenuModule(
             $this->conn, 
             $this->dbPrefix, 
-            $FirstMoldPermissionsModule->list($LoginModule->userId()),
+            $FirstMoldPermissionsModule->lista($LoginModule->userId()),
             $NivelPoderModule->isSuperUser($LoginModule->userId()));
         $NotificacoesModule = new NotificacoesModule();
         $UsuariosModule = new UsuariosModule($this->conn);
+
+        // Define o Método padrão
+        if (empty($this->method)) {
+            $this->method = "listar";
+            $this->prepareMethod();
+        };
 
         // Bloco padrão para verificar acesso
         require PATH_ABS.'/Actions/'.$this->className.'/_common/verificarLogin.php';
@@ -229,11 +233,6 @@ class AdminAction extends AbstractFirstMoldAction
 
         // Bloco padrão para dados do usuário logado
         require PATH_ABS.'/Actions/'.$this->className.'/_common/usuarioLogado.php';
-
-        // Define o Método padrão
-        if (empty($this->method)) {
-            $this->methodArchive = "listar";
-        };
 
         switch ($this->methodArchive) {
             case "comando-criar":
@@ -271,10 +270,16 @@ class AdminAction extends AbstractFirstMoldAction
         $FirstMoldMenuModule = new FirstMoldMenuModule(
             $this->conn, 
             $this->dbPrefix, 
-            $FirstMoldPermissionsModule->list($LoginModule->userId()),
+            $FirstMoldPermissionsModule->lista($LoginModule->userId()),
             $NivelPoderModule->isSuperUser($LoginModule->userId()));
         $NotificacoesModule = new NotificacoesModule();
         $UsuariosModule = new UsuariosModule($this->conn);
+
+        // Define o Método padrão
+        if (empty($this->method)) {
+            $this->method = "listar";
+            $this->prepareMethod();
+        };
 
         // Bloco padrão para verificar acesso
         require PATH_ABS.'/Actions/'.$this->className.'/_common/verificarLogin.php';
@@ -290,11 +295,6 @@ class AdminAction extends AbstractFirstMoldAction
 
         // Bloco padrão para dados do usuário logado
         require PATH_ABS.'/Actions/'.$this->className.'/_common/usuarioLogado.php';
-
-        // Define o Método padrão
-        if (empty($this->method)) {
-            $this->methodArchive = "listar";
-        };
 
         switch ($this->methodArchive) {
             case "criar":
@@ -327,7 +327,8 @@ class AdminAction extends AbstractFirstMoldAction
 
         // Define o Método padrão
         if (empty($this->method)) {
-            $this->methodArchive = "login";
+            $this->method = "login";
+            $this->prepareMethod();
         };
 
         switch ($this->methodArchive) {
@@ -361,7 +362,7 @@ class AdminAction extends AbstractFirstMoldAction
         $FirstMoldMenuModule = new FirstMoldMenuModule(
             $this->conn, 
             $this->dbPrefix, 
-            $FirstMoldPermissionsModule->list($LoginModule->userId()),
+            $FirstMoldPermissionsModule->lista($LoginModule->userId()),
             $NivelPoderModule->isSuperUser($LoginModule->userId()));
         $NotificacoesModule = new NotificacoesModule();
         $UsuariosModule = new UsuariosModule($this->conn);

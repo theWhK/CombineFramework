@@ -43,7 +43,7 @@ class BDModule
         }
 
         // String de conexão
-        $connString =   'mysql:host='.HOSTNAME.';
+        $connString =  'mysql:host='.HOSTNAME.';
                         dbname='.$const_nomeBanco.';
                         charset=utf8';
 

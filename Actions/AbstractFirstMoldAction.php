@@ -144,6 +144,30 @@ abstract class AbstractFirstMoldAction extends Action
             $this->parameters = NULL;
         }
 
+        // Prepara os atributos relativos ao comando e método
+        $this->prepareCommand();
+        $this->prepareMethod();
+
+        // Se o Comando indicado existir, executa-o
+		if (method_exists($this, $this->commandArchive)) {
+			$this->{$this->commandArchive}();
+			
+			return;
+		}
+		
+		// Página não encontrada
+		statusCode(404);
+
+		return;
+    }
+
+    /**
+     * Prepara os atributos da Action relativos ao Comando.
+     * 
+     * @return void
+     */
+    protected function prepareCommand()
+    {
         // Procura e armazena os IDs dos Comando e Método, caso existam
         // Resgata o ID do Comando
         if (!empty($this->command)) {
@@ -198,76 +222,72 @@ abstract class AbstractFirstMoldAction extends Action
                     }
                 }
             }
+        }
+    }
 
-            // Resgata o ID do Método
-            if (!empty($this->method)) {
-                // Prepara a query
+    /**
+     * Prepara os atributos da Action relacionados ao Método.
+     * 
+     * @return void
+     */
+    protected function prepareMethod()
+    {
+        // Resgata o ID do Método
+        if (!empty($this->method)) {
+            // Prepara a query
+            $stmt = $this->conn->PDO->prepare(
+            "SELECT
+            id,
+            rotulo,
+            nomeArquivo
+            FROM
+            {$this->dbPrefix}_methods
+            WHERE urlAmigavel = ?
+            AND id_comando_pai = ?");
+
+            // Executa a query
+            $stmt->execute(array(
+                $this->method,
+                $this->commandId
+            ));
+
+            // Checa a existência de retorno
+            if ($stmt->rowCount() > 0) {
+                $data = $stmt->fetch(PDO::FETCH_ASSOC);
+                $this->methodId = $data['id'];
+                if (empty($this->methodId)) {
+                    $this->methodId == null;
+                }
+
+                $this->methodArchive = $data['nomeArquivo'];
+                if (empty($this->methodArchive)) {
+                    $this->methodArchive == null;
+                }
+
+                $this->methodName = $data['rotulo'];
+                if (empty($this->methodName)) {
+                    $this->methodName == null;
+                }
+
+                // Procura e armazena o ID da permissão
                 $stmt = $this->conn->PDO->prepare(
-                "SELECT
-                id,
-                rotulo,
-                nomeArquivo
-                FROM
-                {$this->dbPrefix}_methods
-                WHERE urlAmigavel = ?
-                AND id_comando_pai = ?");
+                    "SELECT id
+                    FROM {$this->dbPrefix}_permissoes_lista
+                    WHERE tipo = 'method'
+                    AND idRegistroAtrelado = ?
+                    LIMIT 1");
+                $stmt->execute([$this->methodId]);
 
-                // Executa a query
-                $stmt->execute(array(
-                    $this->method,
-                    $this->commandId
-                ));
-
-                // Checa a existência de retorno
                 if ($stmt->rowCount() > 0) {
                     $data = $stmt->fetch(PDO::FETCH_ASSOC);
-                    $this->methodId = $data['id'];
-                    if (empty($this->methodId)) {
-                        $this->methodId == null;
-                    }
-
-                    $this->methodArchive = $data['nomeArquivo'];
-                    if (empty($this->methodArchive)) {
-                        $this->methodArchive == null;
-                    }
-
-                    $this->methodName = $data['rotulo'];
-                    if (empty($this->methodName)) {
-                        $this->methodName == null;
-                    }
-
-                    // Procura e armazena o ID da permissão
-                    $stmt = $this->conn->PDO->prepare(
-                        "SELECT id
-                        FROM {$this->dbPrefix}_permissoes_lista
-                        WHERE tipo = 'method'
-                        AND idRegistroAtrelado = ?
-                        LIMIT 1");
-                    $stmt->execute([$this->methodId]);
-
-                    if ($stmt->rowCount() > 0) {
-                        $data = $stmt->fetch(PDO::FETCH_ASSOC);
-                        $this->methodPerm = $data['id'];
-                        
-                        if (!isset($this->methodPerm) && empty($this->methodPerm)) {
-                            $this->methodPerm == null;
-                        }
+                    $this->methodPerm = $data['id'];
+                    
+                    if (!isset($this->methodPerm) && empty($this->methodPerm)) {
+                        $this->methodPerm == null;
                     }
                 }
             }
         }
-
-        // Se o Comando indicado existir, executa-o
-		if (method_exists($this, $this->commandArchive)) {
-			$this->{$this->commandArchive}();
-			
-			return;
-		}
-		
-		// Página não encontrada
-		statusCode(404);
-
-		return;
     }
 
     abstract function index();

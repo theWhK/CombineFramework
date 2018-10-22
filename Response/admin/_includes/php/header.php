@@ -74,10 +74,27 @@
                             if (is_array($menuHeader)) {
                                 foreach ($menuHeader as $item) {
                                 ?>
-                                <li <?php if (is_array($item['listaSubitens'])) {?>class="has-submenu"<?php } ?>>
-                                <a <?php if ($item['urlAmigavel']) { ?>href="<?=URL_BASE?>/<?=$this->core->action_urlName?>/<?=$item['urlAmigavel']?>"<?php } ?>>
-                                    <?php if (!empty($item['classeIcone'])) {?><i class="<?=$item['classeIcone']?>"></i><?php } ?> <span> <?=$item['rotulo']?> </span> 
-                                <?php if ($item['urlAmigavel']) { ?></a><?php } ?>
+                                <li 
+                                    <?php if (is_array($item['listaSubitens'])) {?>
+                                        class="has-submenu"
+                                    <?php } ?>
+                                >
+
+                                    <a 
+                                        <?php if ($item['urlAmigavel']) { ?>
+                                            href="<?=URL_BASE?>/<?=$this->core->action_urlName?>/<?=$item['urlAmigavel']?>"
+                                        <?php } ?>
+                                    >
+
+                                        <?php if (!empty($item['classeIcone'])) {?>
+                                            <i class="<?=$item['classeIcone']?>"></i>
+                                        <?php } ?> 
+
+                                        <span> <?=$item['rotulo']?> </span> 
+                                        
+                                    
+                                    </a>
+                                    
                                     <?php
                                     if (is_array($item['listaSubitens'])) {
                                     ?>

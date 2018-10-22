@@ -69,7 +69,7 @@ class CRUDModule
 
         // Prepara a query
         $stmt = $this->conn->PDO->prepare(
-        'INSERT INTO '.$this->tables[0].'
+        'INSERT INTO '.$this->tables[$tableId].'
         ('.implode(',', $chaves).')
         VALUES
         ('.$interrogacoes.');');
